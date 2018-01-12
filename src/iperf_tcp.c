@@ -389,22 +389,33 @@ iperf_tcp_connect(struct iperf_test *test)
         return -1;
     }
 
-    if (test->bind_address) {
+/*    if (test->bind_address) { */
+    if (1) {
         struct sockaddr_in *lcladdr;
-        lcladdr = (struct sockaddr_in *)local_res->ai_addr;
+	lcladdr = (struct sockaddr_in *) calloc(1, sizeof(struct sockaddr_in));
+/*        lcladdr = (struct sockaddr_in *)local_res->ai_addr; */
+	lcladdr->sin_family = AF_INET;
+	lcladdr->sin_addr.s_addr = htonl(INADDR_ANY);
         lcladdr->sin_port = htons(test->bind_port);
-        local_res->ai_addr = (struct sockaddr *)lcladdr;
+/*        local_res->ai_addr = (struct sockaddr *)lcladdr; */
 
-        if (bind(s, (struct sockaddr *) local_res->ai_addr, local_res->ai_addrlen) < 0) {
+/*        if (bind(s, (struct sockaddr *) local_res->ai_addr, local_res->ai_addrlen) < 0) { */
+
+	fprintf(stderr, "server_res->ai_family %d lcladdr->sin_family %d\n", server_res->ai_family, lcladdr->sin_family);
+	fprintf(stderr, "lcladdr->sin_addr.s_addr %x lcladdr->sin_port %d\n", lcladdr->sin_addr.s_addr, ntohs(lcladdr->sin_port));
+
+        if (bind(s, (struct sockaddr *) lcladdr, sizeof(struct sockaddr)) < 0) {
 	    saved_errno = errno;
 	    close(s);
 	    freeaddrinfo(local_res);
 	    freeaddrinfo(server_res);
 	    errno = saved_errno;
+	    perror("bind()");
             i_errno = IESTREAMCONNECT;
             return -1;
         }
-        freeaddrinfo(local_res);
+	if (local_res) 
+	    freeaddrinfo(local_res);
     }
 
     /* Set socket options */
