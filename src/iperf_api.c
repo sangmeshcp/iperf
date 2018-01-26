@@ -689,6 +689,10 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
 	{"fq-rate", required_argument, NULL, OPT_FQ_RATE},
 	{"pacing-timer", required_argument, NULL, OPT_PACING_TIMER},
 	{"connect-timeout", required_argument, NULL, OPT_CONNECT_TIMEOUT},
+        {"custom-yaml", required_argument, NULL, OPT_CUSTOM_YAML},
+        {"server-support", required_argument, NULL, OPT_CUSTOM_SERVER_SUPPORT},
+        {"client-support", required_argument, NULL, OPT_CUSTOM_CLIENT_SUPPORT}, 
+        {"tracking", required_argument, NULL, OPT_CUSTOM_TRACKING_SUPPORT},
         {"debug", no_argument, NULL, 'd'},
         {"help", no_argument, NULL, 'h'},
         {NULL, 0, NULL, 0}

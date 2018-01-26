@@ -176,7 +176,13 @@ const char usage_longstr[] = "Usage: iperf3 [-s|-c host] [options]\n"
                            "  --rsa-public-key-path     path to the RSA public key used to encrypt\n"
                            "                            authentication credentials\n"
 #endif //HAVESSL
-    
+/* #ifdef CUSTOM_PROTOCOL this is being added by sangamesh to create a new custom style protocol in yaml */    
+
+			   "  --custom-yaml              Provide the packet structure in YAML\n"
+                           "  --server-support           Provide parameters to start the server\n"
+                           "  --client-support           Provide parameters to start the client\n"
+                           "  --tracking                 Provide Field name as in yaml to track for counters \n"
+//#endif
 #ifdef NOT_YET_SUPPORTED /* still working on these */
 #endif
 
